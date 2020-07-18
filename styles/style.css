@@ -1,0 +1,175 @@
+/* *********** INDEX.HTML ************** */    
+
+.whole {
+    width: 100%;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.title {
+    text-align: center;
+}
+
+.whole,  
+.bookmark-item {
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+}
+
+.filter-hide {
+    display: none;
+}
+
+#filter-div {
+    margin-top: 10px;
+}
+
+.button-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10%;
+}
+
+.button {
+    flex-direction: row;
+}
+
+.bookmark-section {
+    margin: 30px;
+}
+
+.bookmark-list {
+    list-style: none;
+}
+
+.bookmark-item {
+    font-size: 20px;
+    margin: 0 0 20px 0;
+    padding: 5px;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.star {
+    color: rgb(201, 171, 0);
+    font-size: medium;
+}
+
+button {
+    height: 30px;
+    border-radius: 5px;
+    border-color: rgb(60, 60, 60);
+    box-shadow: 2px 1px 1px;
+    font-size: 20px;
+    background-color: rgb(172, 196, 240);
+}
+
+/* *********** NEWBOOK.HTML *************** */
+
+.all-new-bookmark-page {
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(159, 159, 159);
+    /*margin: 0 10px 30px 10px;*/
+    background-color: rgb(235, 235, 235);
+}
+
+.new-bookmark-section {
+    background-color: white;
+    margin: 6px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    padding: 10px;
+}
+
+h2, form {
+    text-align: center;
+    padding: 5px;
+}
+
+form input, textarea{
+    width: 80%;
+    font-size: 20px;
+}
+
+input#new-url-form,
+input#new-title-form {
+    height: 23px;
+}
+
+textarea {
+    height: 100px;
+    max-width: 80%;
+    min-width: 80%;
+}
+
+#cancel-button, #stars-drop{
+    margin-left: 10%;
+}
+
+#save-button {
+    margin-right: 10%;
+}
+
+#stars-drop {
+    width: 63%;
+    margin-bottom: 10px;
+}
+
+input, textarea {
+    margin-bottom: 10px;
+}
+
+
+
+/* ************* EXPANDED.HTML **************** */
+
+.description-collapse {
+    display: none;
+}
+
+button a {
+    text-decoration: none;
+    color: black;
+}
+
+.visit-site-button {
+    width: 150px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(63, 63, 63);
+    margin-bottom: 20px;
+}
+
+p {
+    padding: 5px;
+}
+
+
+
+
+
+@media all and (min-width: 600px){
+    .bookmark-section {
+        min-width: 400px;
+    }
+
+    .whole {
+        max-width: 800px;
+        border-radius: 5px;
+        margin: auto;
+    }
+}
