@@ -1,6 +1,4 @@
 import $ from 'jquery';
-import 'normalize.css';
-import './index.css';
 
 import bookmarks from './bookmarks.js';
 import api from './api.js';
