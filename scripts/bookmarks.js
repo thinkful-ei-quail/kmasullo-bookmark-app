@@ -38,26 +38,27 @@ function createStarRating(rating){
 function generateHtmlElement(bookmark){
   if (bookmark.expanded===true){
     return `<div class="bookmark-item column" data-item-id="${bookmark.id}">
-        <div class="space-between">
-            <div id=${bookmark.title} class="row">${bookmark.title}</div>
-            <div id=${bookmark.title} class="star row">${createStarRating(bookmark.rating)}</div>
-        </div>  
+              <div class="space-between">
+                  <button id=${bookmark.title} class="row">${bookmark.title}</button>
+                  <div id=${bookmark.title} class="star row">${createStarRating(bookmark.rating)}</div>
+              </div>
 
         <div class="descriptionDiv">
             <hr>
             <p>
                 ${bookmark.desc}
             </p>
-            <button class="visit-site-button"><a href=${bookmark.url} target="_blank">Visit Site</a></button>
+            <p><a href=${bookmark.url} target="_blank">Visit ${bookmark.title}</a></p>
+            
             <button id="delete-button">Delete</button>
         </div>
         </div>`;
   }else {
     return `<div class="bookmark-item column" data-item-id="${bookmark.id}">
-      <div class="space-between">
-          <div id=${bookmark.title} class="row">${bookmark.title}</div>
-          <div id=${bookmark.title} class="star row">${createStarRating(bookmark.rating)}</div>
-      </div></div>`;
+              <div class="space-between">
+                  <button id=${bookmark.title} class="row">${bookmark.title}</button>
+                  <div id=${bookmark.title} class="star row">${createStarRating(bookmark.rating)}</div>
+              </div></div>`;
   }
 }
 
@@ -84,6 +85,8 @@ function eventAddPage(){
     render();
   });
 }
+
+
 
 function toggleExpanded(){
   $('.bookmark-list').on('click', '.bookmark-item', event =>{
@@ -200,16 +203,3 @@ export default {
 
 
 
-
-
-
-
-/*
-function returnId(){
-  $('.bookmark-list').on('click', '.bookmark-item', event =>{
-    let id = String($(event.currentTarget).data('item-id'));
-    let item = store.findById(id);
-    console.log(item);
-  });
-}
-*/
