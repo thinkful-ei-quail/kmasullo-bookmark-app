@@ -16,9 +16,9 @@ function formString(){
                         <option value=1>&#9733</option>
                     </select>
                 <label for="new-url"></label>
-            <input type="text" id="new-url" placeholder="Enter URL Here">
+            <input type="text" id="new-url" placeholder="Enter URL Here" required>
             <label for="new-title"></label>
-            <input type="text" id="new-title" placeholder="Title">
+            <input type="text" id="new-title" placeholder="Title" required>
             <label for="new-description"></label>
             <textarea id="new-description" rows="14" cols="10" wrap="soft" maxlength="500" style="overflow:hidden"; resize:none; placeholder="Enter description here"></textarea>
             <input type="submit" value="submit"></input>
