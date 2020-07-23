@@ -1,4 +1,4 @@
-I'm not sure that this is what is meant by "list all user stories completed."
+This is a simple bookmark app which allows users to save a list of websites, along with a description of the site and link to visit it. The app can be viewed at https://thinkful-ei-quail.github.io/kmasullo-bookmark-app/
 
 1. Users can add bookmarks that contain a title, url, description and rating.
 2. Condensed bookmarks appear at the opening of the page.
