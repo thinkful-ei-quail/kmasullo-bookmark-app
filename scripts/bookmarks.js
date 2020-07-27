@@ -1,4 +1,4 @@
-import store from './store.js';
+import {store} from './store.js';
 import item from './item.js';
 import api from './api.js';
 
@@ -14,13 +14,13 @@ function formString(){
                         <option value=3>&#9733 &#9733 &#9733</option>
                         <option value=2>&#9733 &#9733</option>
                         <option value=1>&#9733</option>
-                    </select>
-                <label for="new-url"></label>
-            <input type="text" id="new-url" placeholder="Enter URL Here" required>
-            <label for="new-title"></label>
-            <input type="text" id="new-title" placeholder="Title" required>
-            <label for="new-description"></label>
-            <textarea id="new-description" rows="14" cols="10" wrap="soft" maxlength="500" style="overflow:hidden"; resize:none; placeholder="Enter description here"></textarea>
+                    </select><br>
+                <label for="new-url">URL:</label>
+            <input type="text" id="new-url" required><br>
+            <label for="new-title">Title:</label>
+            <input type="text" id="new-title" required><br>
+            <label for="new-description">Description:</label><br>
+            <textarea id="new-description" rows="14" cols="10" wrap="soft" maxlength="500" style="overflow:hidden"; resize:none;></textarea>
             <input type="submit" value="submit"></input>
         </form>          
         </div>`;
@@ -108,23 +108,15 @@ function eventDeleteItem(){
       });
   });
 }
-
-function filterToggle(){
-  $('#filter-btn').on('click', event =>{
-    $('#filter-div').toggleClass('filter-hide');
-  });
-}
-
-function eventFilterByHighest(){
-  $('#filter-div').on('click', '#highest', event => {
-    store.filter = 1;
-    render();
-  });
-}
   
-function eventFilterByLowest(){
-  $('#filter-div').on('click', '#lowest', event => {
-    store.filter = 2;
+function eventFilter(){
+  $('#filter-drop').on('change', event => {
+    let selectedVal = $('#filter-drop').find(':selected').val();
+    if (selectedVal==='lowest'){
+      store.filter = 2;
+    } else {
+      store.filter = 1;
+    } 
     render();
   });
 }
@@ -167,9 +159,7 @@ function createBookmark(){
 function bindEventListeners(){
   toggleExpanded();
   eventAddPage();
-  filterToggle();
-  eventFilterByLowest();
-  eventFilterByHighest();
+  eventFilter();
   createBookmark();
   eventDeleteItem();
 }

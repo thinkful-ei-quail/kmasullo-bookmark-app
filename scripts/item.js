@@ -1,5 +1,5 @@
 import cuid from 'cuid';
-import store from './store';
+import {store} from './store';
   
 
 function create(title, rating, url, desc) {

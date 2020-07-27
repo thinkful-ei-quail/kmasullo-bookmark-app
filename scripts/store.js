@@ -1,41 +1,46 @@
 import item from './item.js';
 
 
+let store = (function(){
+  let items = [];
+  let adding = false;
+  let error = null;
+  let filter = 0;
 
-let items = [];
-let adding=false;
-let error = null;
-let filter = 0;
+  return {
+    errorHandler: function(){
+      if(this.error===1){
+        throw new TypeError ('Title must not be blank');
+      }else if (this.error===2){
+        throw new TypeError ('URL must not be blank');
+      }else {
+        return;
+      }
+    },
 
-function errorHandler(){
-  if(this.error===1){
-    throw new TypeError ('Title must not be blank');
-  }else if (this.error===2){
-    throw new TypeError ('URL must not be blank');
-  }else {
-    return;
+    findById: function(id) {
+      return items.find(currentItem => {return currentItem.id === id;});
+    },
+
+    filterByHighest: function(){
+      return items.sort((a, b) => b.rating - a.rating);
+    },
+
+    filterByLowest: function(){
+      return items.sort((a, b) => a.rating - b.rating);
+    },
+
+    addItem: function(newItem){
+      items.push(newItem);
+    },
+
+
+    findAndDelete: function(id){
+      items = items.filter(currentItem => currentItem.id !== id);
+    }
   }
-}
 
-function findById(id) {
-  return this.items.find(currentItem => {return currentItem.id === id;});
-}
-
-function filterByHighest(){
-  return this.items.sort((a, b) => b.rating - a.rating);
-}
-
-function filterByLowest(){
-  return this.items.sort((a, b) => a.rating - b.rating);
-}
-
-function addItem(newItem){
-  this.items.push(newItem);
-}
-
-function findAndDelete(id){
-  this.items = this.items.filter(currentItem => currentItem.id !== id);
-}
+})();
 
 
 
@@ -43,17 +48,4 @@ function findAndDelete(id){
 
 
 
-
-
-export default {
-  items,
-  adding,
-  filter,
-  error,
-  filterByHighest,
-  filterByLowest,
-  findById,
-  addItem,
-  findAndDelete,
-  errorHandler
-};
+export {store};
