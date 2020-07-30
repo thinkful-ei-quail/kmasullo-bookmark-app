@@ -1,6 +1,6 @@
 import {store} from './store.js';
 import item from './item.js';
-import api from './api.js';
+import {api} from './api.js';
 
 function formString(){
   return `<div class="all-new-bookmark-page">
@@ -48,7 +48,7 @@ function generateHtmlElement(bookmark){
             <p>
                 ${bookmark.desc}
             </p>
-            <p><a href=${bookmark.url} target="_blank">Visit ${bookmark.title}</a></p>
+            <p><a href=${bookmark.url} target="_blank">Visit ${bookmark.url}</a></p>
             
             <button id="delete-button">Delete</button>
         </div>
@@ -91,8 +91,8 @@ function eventAddPage(){
 function toggleExpanded(){
   $('.bookmark-list').on('click', '.bookmark-item', event =>{
     let id = String($(event.currentTarget).data('item-id'));
-    let item = store.findById(id);
-    item.expanded = !item.expanded;
+    let currentBookmark = store.findById(id);
+    currentBookmark.expanded = !currentBookmark.expanded;
     render();    
   });
 }
@@ -100,6 +100,7 @@ function toggleExpanded(){
 function eventDeleteItem(){
   $('.bookmark-list').on('click', '#delete-button', event =>{
     let id = String($(event.currentTarget).closest('.bookmark-item').data('item-id'));
+    console.log('item to delete', id);
     api.deleteItem(id)
       .then(res => res.json())
       .then(() => {
@@ -114,9 +115,9 @@ function eventFilter(){
     let selectedVal = $('#filter-drop').find(':selected').val();
     if (selectedVal==='lowest'){
       store.filter = 2;
-    } else {
+    } else if (selectedVal==='highest'){
       store.filter = 1;
-    } 
+    } else {store.filter = 0};
     render();
   });
 }

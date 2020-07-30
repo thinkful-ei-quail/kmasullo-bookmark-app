@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import bookmarks from './bookmarks.js';
-import api from './api.js';
+import {api} from './api.js';
 import {store} from './store.js';
 
 
