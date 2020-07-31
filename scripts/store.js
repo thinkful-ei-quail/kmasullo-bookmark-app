@@ -1,4 +1,4 @@
-import item from './item.js';
+import {item} from './item.js';
 
 
 let store = (function(){
