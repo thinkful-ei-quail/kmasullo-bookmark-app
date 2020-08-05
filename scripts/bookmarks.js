@@ -10,24 +10,25 @@ let bookmarks = (function(){
     formString: function(){
       return `<div class="all-new-bookmark-page">
             <div class="new-bookmark-section">
-                <h2>New Bookmark:</h2>
-                <form id="new-bookmark">
-                    <label for="stars-drop">Rating:</label>
-                        <select name="new-bookmark" id="stars-drop">
-                            <option value=5>&#9733 &#9733 &#9733 &#9733 &#9733</option>
-                            <option value=4>&#9733 &#9733 &#9733 &#9733</option>
-                            <option value=3>&#9733 &#9733 &#9733</option>
-                            <option value=2>&#9733 &#9733</option>
-                            <option value=1>&#9733</option>
-                        </select><br>
-                    <label for="new-url">URL:</label>
+              <h2>New Bookmark:</h2>
+              <form id="new-bookmark">
+                <label for="stars-drop">Rating:</label>
+                  <select name="new-bookmark" id="stars-drop">
+                      <option value=5>&#9733 &#9733 &#9733 &#9733 &#9733</option>
+                      <option value=4>&#9733 &#9733 &#9733 &#9733</option>
+                      <option value=3>&#9733 &#9733 &#9733</option>
+                      <option value=2>&#9733 &#9733</option>
+                      <option value=1>&#9733</option>
+                  </select><br>
+                <label for="new-url">URL:</label>
                 <input type="text" id="new-url" required><br>
                 <label for="new-title">Title:</label>
                 <input type="text" id="new-title" required><br>
-                <label for="new-description">Description:</label><br>
-                <textarea id="new-description" rows="14" cols="10" wrap="soft" maxlength="500" style="overflow:hidden"; resize:none;></textarea>
-                <input type="submit" value="submit"></input>
-            </form>          
+                <label id="textarea-label" for="new-description">Info:</label>
+                <textarea id="new-description" ></textarea><br>
+                <button type="submit" value="submit">Submit</button>
+                <button type="button" id="cancel-button">Cancel</button>
+              </form>
             </div>`;
       },
 
@@ -44,8 +45,8 @@ let bookmarks = (function(){
       if (bookmark.expanded===true){
         return `<div class="bookmark-item column" data-item-id="${bookmark.id}">
                   <div class="space-between">
-                      <button id=${bookmark.title} class="row">${bookmark.title}</button>
-                      <div id=${bookmark.title} class="star row">${this.createStarRating(bookmark.rating)}</div>
+                      <button id=${bookmark.id} class="row">${bookmark.title}</button>
+                      <div id=${bookmark.id} class="star row">${this.createStarRating(bookmark.rating)}</div>
                   </div>
 
             <div class="descriptionDiv">
@@ -61,17 +62,40 @@ let bookmarks = (function(){
       }else {
         return `<div class="bookmark-item column" data-item-id="${bookmark.id}">
                   <div class="space-between">
-                      <button id=${bookmark.title} class="row">${bookmark.title}</button>
-                      <div id=${bookmark.title} class="star row">${this.createStarRating(bookmark.rating)}</div>
+                      <button id=${bookmark.id} class="row">${bookmark.title}</button>
+                      <div id=${bookmark.id} class="star row">${this.createStarRating(bookmark.rating)}</div>
                   </div></div>`;
       }
     },
 
     generateHtmlString: function(bookmarks){
       let list = bookmarks.map((bookmark) => this.generateHtmlElement(bookmark));
-      return list.join('');
+      return ` <section class="bookmark-section">
+          <h3>Bookmarks:</h3>
+          <div class="bookmark-list">${list.join('')}</div>
+      </section>`;
     },
     
+
+    buttonSection: function(){
+      return ` <section class="button-section">
+          <div class="button"><button id="add-button">Add</button></div>
+          <div class="button">
+              <label for="filter-drop" id="filter-btn">Filter By:</label> 
+              <select id="filter-drop">
+                  <option>Select:</option>
+                  <option value="highest" id="highest">Highest</option>
+                  <option value="lowest" id="lowest">Lowest</option>
+              </select>
+          </div>
+      </section>`;
+    },
+
+
+
+
+
+
     currentBookmarkString: function(){
       let bookmarks = null;
       if(store.filter === 0){
@@ -85,8 +109,15 @@ let bookmarks = (function(){
     },
 
     eventAddPage: function(){
-      $('#add-button').on('click', event =>{
-        store.adding = !store.adding;
+      $('main').on('click', '#add-button', event =>{
+        store.adding = true;
+        this.render();
+      });
+    },
+
+    eventCancelAdd: function(){
+      $('main').on('click', '#cancel-button', event =>{
+        store.adding = false;
         this.render();
       });
     },
@@ -94,7 +125,7 @@ let bookmarks = (function(){
 
 
     toggleExpanded: function(){
-      $('.bookmark-list').on('click', '.bookmark-item', event =>{
+      $('main').on('click', '.bookmark-item', event =>{
         let id = String($(event.currentTarget).data('item-id'));
         let currentBookmark = store.findById(id);
         currentBookmark.expanded = !currentBookmark.expanded;
@@ -103,7 +134,7 @@ let bookmarks = (function(){
     },
 
     eventDeleteItem: function(){
-      $('.bookmark-list').on('click', '#delete-button', event =>{
+      $('main').on('click', '#delete-button', event =>{
         let id = String($(event.currentTarget).closest('.bookmark-item').data('item-id'));
         api.deleteItem(id)
           .then(res => res.json())
@@ -115,7 +146,7 @@ let bookmarks = (function(){
     },
     
     eventFilter: function(){
-      $('#filter-drop').on('change', event => {
+      $('main').on('change', '#filter-drop', event => {
         let selectedVal = $('#filter-drop').find(':selected').val();
         if (selectedVal==='lowest'){
           store.filter = 2;
@@ -142,6 +173,7 @@ let bookmarks = (function(){
             .then(res => res.json())
             .then((newItem) => {
               store.addItem(newItem);
+              store.adding=false;
               this.render();
             });
         }catch (error) {
@@ -157,6 +189,7 @@ let bookmarks = (function(){
       this.eventFilter();
       this.createBookmark();
       this.eventDeleteItem();
+      this.eventCancelAdd();
     },
 
     render: function(e){
@@ -165,10 +198,12 @@ let bookmarks = (function(){
         html = `${e}`;
       }
       if (store.adding){
-        html+=this.formString();
+        html=this.formString();
+      }else {
+        html=this.buttonSection();
+        html+=this.currentBookmarkString();
       }
-      html+=this.currentBookmarkString();
-      $('.bookmark-list').html(html);
+      $('main').html(html);
     }
 
 }})();
